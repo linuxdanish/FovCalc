@@ -5,6 +5,25 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">A Simple FOV Calculator</h1>
+    <p>This is a basic calculator that will calculate the effective area of view (width x height)
+        projected on to the designated camera sensor as given by a specific lens combination.
+    </p>
+    <form method="post">
+        <div>
+            <label asp-for="senW"></label>
+            <input asp-for="senW"/>
+            <label asp-for="fL"></label>
+            <input asp-for="fL"/>
+            <label asp-for="dist"></label>
+            <input asp-for="dist"/>
+            <input type="submit"/>
+        </div>
+    </form>
+    @if (Model.linearFovW != 0)
+    {
+        <p>The computed angle of view is: @Model.AoV</p>
+        <p>The computed linear field of view width is:  @Model.linearFovW</p>
+        <p>The frame width using a 2x anamorphic lense is: @Model.anamorphFov</p>
+    }
 </div>
