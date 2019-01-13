@@ -11,12 +11,13 @@
     </p>
     <form method="post">
         <div>
-            <label asp-for="senW"></label>
-            <input asp-for="senW"/>
-            <label asp-for="fL"></label>
+            <select asp-for="camera" asp-items="Model.cameraOptions"></select>
+            <label asp-for="fL">Focal Length:</label>
             <input asp-for="fL"/>
-            <label asp-for="dist"></label>
+            <label asp-for="dist">Distance to focal plane:</label>
             <input asp-for="dist"/>
+            <label asp-for="anamorphic">Anamorphic:</label>
+            <input asp-for="anamorphic">
             <input type="submit"/>
         </div>
     </form>
