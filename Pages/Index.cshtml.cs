@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace FovCalc.Pages
 {
@@ -20,8 +22,6 @@ namespace FovCalc.Pages
             {"Alexa", new Camera{ name = "Arri Alexa 4:3", sensorH = 23.76, sensorW = 17.82}}
         };
 
-        public SelectList cameraOptions { get; set; }
-
         [BindProperty]
         public double senW { get; set; }
 
@@ -29,12 +29,15 @@ namespace FovCalc.Pages
         public double senH { get; set; }
 
         [BindProperty]
+        [Required]
         public string camera { get; set; }
 
         [BindProperty]
+        [Required]
         public double fL { get; set; }
 
         [BindProperty]
+        [Required]
         public double dist { get; set; }
 
         [BindProperty]
@@ -43,29 +46,49 @@ namespace FovCalc.Pages
         [BindProperty]
         public bool anamorphic { get; set; }
 
+        [BindProperty]
+        public string units { get; set; }
+
         public double anamorphFov;
 
-        public double AoV;
-        public void OnGet()
-        {
-            frameSizes = new SelectList(cameras, "Key", "Value");
-
-            cameraOptions = new SelectList
+        public SelectList cameraOptions = new SelectList
             (
                 cameras.Select( x => new { Value = x.Key, Text = x.Value.name}),
                 "Value",
                 "Text"
             );
+
+        public static List<SelectListItem> unitOption =  new List<SelectListItem>()
+        {
+            new SelectListItem() {Text="meters", Value="m"},
+            new SelectListItem() {Text="feet", Value="\'"}
+        };
+
+        public SelectList unitOptions = new SelectList
+        (
+            unitOption, "Value", "Text"
+        );
+
+       // public SelectList unitOptions = new SelectList(unitOption, "Value", "Text");
+
+
+        public double AoV;
+        public void OnGet()
+        {
+
         }
 
         public void OnPost() 
         {
-            senH = cameras[camera].sensorH;
-            senW = cameras[camera].sensorW;
+            if(ModelState.IsValid)
+            {
+                senH = cameras[camera].sensorH;
+                senW = cameras[camera].sensorW;
 
-            linearFovW = (senW/fL) * dist;
-            anamorphFov = linearFovW * 2;
-            AoV = 2 * Math.Atan(senW / ( 2 * fL)) * (180/Math.PI);
+                linearFovW = (senW/fL) * dist;
+                anamorphFov = linearFovW * 2;
+                AoV = 2 * Math.Atan(senW / ( 2 * fL)) * (180/Math.PI);
+            }
         }
     }
 }

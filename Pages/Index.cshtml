@@ -9,22 +9,38 @@
     <p>This is a basic calculator that will calculate the effective area of view (width x height)
         projected on to the designated camera sensor as given by a specific lens combination.
     </p>
-    <form method="post">
-        <div>
-            <select asp-for="camera" asp-items="Model.cameraOptions"></select>
-            <label asp-for="fL">Focal Length:</label>
-            <input asp-for="fL"/>
-            <label asp-for="dist">Distance to focal plane:</label>
-            <input asp-for="dist"/>
-            <label asp-for="anamorphic">Anamorphic:</label>
-            <input asp-for="anamorphic">
-            <input type="submit"/>
+</div>
+    <form class="input_form" method="post">
+        <div class="vert-padding">
+            <label  as-for="camera">Camera: </label>
+            <select  asp-for="camera" asp-items="Model.cameraOptions"></select>
+        </div>
+        <div class="vert-padding">
+            <label  asp-for="fL">Focal Length (mm):</label>
+            <input  asp-for="fL"/>
+            @Html.ValidationMessage("fL")
+        </div>
+        <div class="vert-padding">
+            <label  asp-for="dist">Distance to focal plane:</label>
+            <input  asp-for="dist"/>
+            @Html.ValidationMessage("dist")
+            <select asp-for="units" asp-items="Model.unitOptions"></select>
+        </div>
+        <div class="vert-padding">
+            <label  asp-for="anamorphic">Anamorphic:</label>
+            <input  asp-for="anamorphic">
+        </div>
+        <div class="vert-padding">
+            <input  class="submit" type="submit"/>
         </div>
     </form>
+    <div class="results">
     @if (Model.linearFovW != 0)
-    {
-        <p>The computed angle of view is: @Model.AoV</p>
-        <p>The computed linear field of view width is:  @Model.linearFovW</p>
-        <p>The frame width using a 2x anamorphic lense is: @Model.anamorphFov</p>
-    }
-</div>
+        {
+            <p>The computed angle of view is: @String.Format("{0:N2}", Model.AoV)&#176</p>
+            <p>The computed linear field of view width is:  @String.Format("{0:N2}", Model.linearFovW)</p>
+            <p>The frame width using a 2x anamorphic lens is: @String.Format("{0:N2}", Model.anamorphFov)</p>
+        }
+    </div>
+
+

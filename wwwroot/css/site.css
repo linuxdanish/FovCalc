@@ -54,3 +54,43 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.input_form {
+  max-width: 50%;
+  float: left;
+}
+
+.results {
+  max-width: 50%;
+  float: right;
+}
+
+.vert-padding {
+  padding: .5em 0em;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+label, input {
+  display: inline-block;
+}
+
+label {
+  width: 60%;
+  text-align: right;
+}
+
+label + input, label + select {
+  width: 30%;
+  margin: 0 0% 0 4%;
+}
+
+.submit{
+  float: right;
+}

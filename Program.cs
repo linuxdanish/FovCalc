@@ -17,6 +17,16 @@ namespace FovCalc
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            var configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
+
+            return WebHost.CreateDefaultBuilder(args)
+            .UseConfiguration(configuration)
+            .UseStartup<Startup>()
+            .Build();
+        }
+
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
